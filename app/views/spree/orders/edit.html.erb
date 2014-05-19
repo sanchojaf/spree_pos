@@ -1,0 +1,52 @@
+<% @body_id = 'cart' %>
+<div data-hook="cart_container">
+
+  <% if @order.line_items.empty? %>
+
+    <div data-hook="empty_cart">
+      <div class="alert alert-info"><%= Spree.t(:your_cart_is_empty) %></div>
+    </div>
+
+  <% else %>
+
+  <div data-hook="outside_cart_form">
+    <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
+      <div data-hook="inside_cart_form">
+
+        <div data-hook="cart_items">
+          <%= render :partial => 'spree/orders/form', :locals => { :order_form => order_form } %>
+        </div>
+
+        <%= render :partial => 'spree/orders/calculator' %>
+                
+        <div id="empty-cart" class="col-sm-3" data-hook>
+          <%= form_tag empty_cart_path, :method => :put do %>
+            <p id="clear_cart_link" data-hook>
+              <br/>
+              <%= submit_tag Spree.t(:empty_cart), :class => 'btn btn-default' %>
+            </p>
+          <% end %>
+        </div>
+
+        <div class="links col-sm-6 navbar-form pull-right text-right" data-hook="cart_buttons">
+          <div class="form-group">
+            <%= order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code), 
+                                      class: "form-control form-control-inline" %>
+          </div>
+          <%= button_tag :class => 'btn btn-primary', :id => 'update-button' do %>
+            <%= Spree.t(:update) %>
+          <% end %>
+          <%= button_tag :class => 'btn btn-lg btn-success', :id => 'checkout-link', :name => 'checkout' do %>
+            <%= Spree.t(:checkout) %>
+          <% end %>
+        </div>            
+         
+        
+      </div>
+    <% end %>
+  </div>
+
+
+
+<% end %>
+</div>

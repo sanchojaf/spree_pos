@@ -1,0 +1,12 @@
+<% unless @taxonomies.nil? || @taxonomies.empty? %>
+  <nav id="taxonomies" class="sidebar-item" data-hook>
+    <% @taxonomies.each do |taxonomy| %>
+      <div class="col-sm-6">
+      <% cache taxonomy do %>
+        <h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name) %></h4>
+        <%= taxons_tree(taxonomy.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
+      <% end %>
+      </div>
+    <% end %>
+  </nav>
+<% end %>

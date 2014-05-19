@@ -1,0 +1,43 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" lang="<%= I18n.locale %>"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="<%= I18n.locale %>"><!--<![endif]-->
+  <head data-hook="inside_head">
+    <%= render :partial => 'spree/shared/head' %>
+  </head>
+  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+
+    <div class="container-fluid">
+
+      <div class="row" data-hook>        
+
+        <%= render :partial => 'spree/shared/sidebar' %>
+
+        <div id="content" class="col-sm-8" data-hook>
+          
+          <%= flash_messages %>
+          <div class="container-fluid">
+            <div class="col-sm-5"%><%= breadcrumbs(@taxon) %></div>        
+            <div "id="search-bar" class="col-sm-7" data-hook>
+              <%= render :partial => 'spree/shared/search' %>
+            </div>
+          </div>
+          <%= render :partial => 'spree/shared/taxonomies' %>
+  
+          <%= yield %>
+        </div>
+
+        <%= yield :templates %>
+
+      </div>
+
+    </div>
+
+    <%= render :partial => 'spree/shared/google_analytics' %>
+    <script>
+      Spree.api_key = <%= raw(try_spree_current_user.try(:spree_api_key).to_s.inspect) %>;
+    </script>
+  </body>
+</html>
